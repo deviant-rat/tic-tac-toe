@@ -1,4 +1,5 @@
 import random
+import time
 
 def read_high_score():
     try:
@@ -19,6 +20,7 @@ def game():
     random_int = random.randint(1,15)
     count = 0
     high_score = read_high_score()
+    time_start = time.time()
     while True:
         try:
             user_guess = int(input('Plese enter a number between 1 and 15: '))
@@ -34,8 +36,10 @@ def game():
         elif user_guess<random_int:
             print("Aim higher")
         else:
+            final_time = round(time.time() - time_start, 2)
             print("You won!!!")
             print("Number of guesses: "+str(count))
+            print(f"Time played: {final_time}")
             if high_score is None or count < high_score:
                 print ("New High Score!!!")
                 save_high_score(count)
