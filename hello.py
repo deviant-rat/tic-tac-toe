@@ -1,5 +1,31 @@
 import random
 import time
+import json
+
+def open_archive():
+    try:
+        with open('archive.json', 'r') as file:
+            data = json.load(file)
+        return data
+    except FileNotFoundError:
+        data = []
+        return data
+
+
+def add_record(name, time, score):
+    new_record = { 
+        "name": name,
+        "time": time,
+        "score": score
+    }
+    archive = open_archive()
+    archive.append(new_record)
+    with open('archive.json', 'w') as file:
+        json.dump(archive, file, indent=4)
+
+def archive_print():
+    print(open_archive())
+
 
 def read_high_score():
     try:
@@ -40,6 +66,7 @@ def game():
             print("You won!!!")
             print("Number of guesses: "+str(count))
             print(f"Time played: {final_time}")
+            add_record('player', str(final_time), str(count))
             if high_score is None or count < high_score:
                 print ("New High Score!!!")
                 save_high_score(count)
