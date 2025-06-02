@@ -43,6 +43,7 @@ def save_high_score(score):
 
 def game():
     print("Hello")
+    player_name = input("What's your name\n")
     random_int = random.randint(1,15)
     count = 0
     high_score = read_high_score()
@@ -66,7 +67,7 @@ def game():
             print("You won!!!")
             print("Number of guesses: "+str(count))
             print(f"Time played: {final_time}")
-            add_record('player', str(final_time), str(count))
+            add_record(player_name, str(final_time), str(count))
             if high_score is None or count < high_score:
                 print ("New High Score!!!")
                 save_high_score(count)
