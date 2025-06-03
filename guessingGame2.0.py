@@ -43,11 +43,17 @@ def save_high_score(score):
     with open("high_score.txt", "w") as file:
         file.write(str(score))
 
+def center_wind(root, width=500, height=300):
+    topX = (root.winfo_screenwidth() - width) // 2
+    topY = (root.winfo_screenheight() - height) //2
+    root.geometry(f"{width}x{height}+{topX}+{topY}")
 
 class Game():
     def __init__(self, root):
         self.root = root
         self.root.title("Game")
+        center_wind(root,400,300)
+        #root.configure(bg="red")
         self.randon_int = None
         self.count = 0
         self.start_time = None
