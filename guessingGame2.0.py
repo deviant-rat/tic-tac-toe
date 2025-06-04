@@ -82,6 +82,8 @@ class Game():
         self.result_label = tk.Label(root, text="")
         self.result_label.pack()
 
+        self.name_entry.bind("<Return>", lambda event: self.start_game())
+
     def start_game(self):
         self.player_name = self.name_entry.get().strip()
         if not self.player_name:
@@ -94,6 +96,8 @@ class Game():
         self.guess_entry.config(state='normal')
         self.guess_button.config(state='normal')
         self.result_label.config(text="")
+        self.guess_entry.bind("<Return>", lambda event: self.make_guess())
+        
 
     def make_guess(self):
             try:
