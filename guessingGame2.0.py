@@ -106,7 +106,9 @@ class Game():
                 self.result_label.config(text="Please enter a valid number")
             if user_guess < 1 or user_guess > 15:
                 self.result_label.config(text="Number must be between 1 and 15")
+                self.guess_entry.delete(0, tk.END)
                 return
+            self.guess_entry.delete(0, tk.END)
             self.count+=1
             if user_guess>self.random_int:
                 self.result_label.config(text="Aim lower")
