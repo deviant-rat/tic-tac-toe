@@ -54,35 +54,52 @@ class Game():
         self.root.title("Game")
         center_wind(root,400,300)
         #root.configure(bg="red")
+
         self.randon_int = None
         self.count = 0
         self.start_time = None
         self.player_name = None
 
-        self.name_Label = tk.Label(root, text="Enter your name:")
-        self.name_Label.pack()
+        # Frames
+        self.main_menu_frame = tk.Frame(root)
+        self.game_frame = tk.Frame(root)
 
-        self.name_entry = tk.Entry(root)
-        self.name_entry.pack()
+        self.create_mane_menu()
+        self.create_game_scr()
 
-        self.start_button = tk.Button(root, text="Start Game", command=self.start_game)
-        self.start_button.pack()
+        self.main_menu_frame.pack()
 
-        self.info_label = tk.Label(root, text="")
-        self.info_label.pack()
+        def create_mane_menu(self):
+            tk.Label(self.main_menu_frame, text="Welcome!").pack(pady=20)
+            tk.Button(self.main_menu_frame, text="Play", command=self.show_game).pack()
 
-        self.guess_entry = tk.Entry(root)
-        self.guess_entry.pack()
-        self.guess_entry.config(state='disabled')
+        
+        def create_game_scr(self):
+            self.name_Label = tk.Label(root, text="Enter your name:")
+            self.name_Label.pack()
 
-        self.guess_button = tk.Button(root, text="Guess", command=self.make_guess)
-        self.guess_button.pack()
-        self.guess_button.config(state='disabled')
+            self.name_entry = tk.Entry(root)
+            self.name_entry.pack()
 
-        self.result_label = tk.Label(root, text="")
-        self.result_label.pack()
+            self.start_button = tk.Button(root, text="Start Game", command=self.start_game)
+            self.start_button.pack()
 
-        self.name_entry.bind("<Return>", lambda event: self.start_game())
+            self.info_label = tk.Label(root, text="")
+            self.info_label.pack()
+
+            self.guess_entry = tk.Entry(root)
+            self.guess_entry.pack()
+            self.guess_entry.config(state='disabled')
+
+            self.guess_button = tk.Button(root, text="Guess", command=self.make_guess)
+            self.guess_button.pack()
+            self.guess_button.config(state='disabled')
+
+            self.result_label = tk.Label(root, text="")
+            self.result_label.pack()
+
+            self.name_entry.bind("<Return>", lambda event: self.start_game())
+            self.guess_entry.bind("<Return>", lambda event: self.make_guess())
 
     def start_game(self):
         self.player_name = self.name_entry.get().strip()
@@ -96,7 +113,7 @@ class Game():
         self.guess_entry.config(state='normal')
         self.guess_button.config(state='normal')
         self.result_label.config(text="")
-        self.guess_entry.bind("<Return>", lambda event: self.make_guess())
+        #self.guess_entry.bind("<Return>", lambda event: self.make_guess())
         
 
     def make_guess(self):
