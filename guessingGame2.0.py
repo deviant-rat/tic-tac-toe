@@ -69,38 +69,47 @@ class Game():
 
         self.main_menu_frame.pack()
 
-        def create_mane_menu(self):
-            tk.Label(self.main_menu_frame, text="Welcome!").pack(pady=20)
-            tk.Button(self.main_menu_frame, text="Play", command=self.show_game).pack()
+    def create_mane_menu(self):
+        tk.Label(self.main_menu_frame, text="Welcome!").pack(pady=20)
+        tk.Button(self.main_menu_frame, text="Play", command=self.show_game).pack()
 
         
-        def create_game_scr(self):
-            self.name_Label = tk.Label(root, text="Enter your name:")
-            self.name_Label.pack()
+    def create_game_scr(self):
+        self.name_Label = tk.Label(self.game_frame, text="Enter your name:")
+        self.name_Label.pack()
 
-            self.name_entry = tk.Entry(root)
-            self.name_entry.pack()
+        self.name_entry = tk.Entry(self.game_frame)
+        self.name_entry.pack()
 
-            self.start_button = tk.Button(root, text="Start Game", command=self.start_game)
-            self.start_button.pack()
+        self.start_button = tk.Button(self.game_frame, text="Start Game", command=self.start_game)
+        self.start_button.pack()
 
-            self.info_label = tk.Label(root, text="")
-            self.info_label.pack()
+        self.info_label = tk.Label(self.game_frame, text="")
+        self.info_label.pack()
 
-            self.guess_entry = tk.Entry(root)
-            self.guess_entry.pack()
-            self.guess_entry.config(state='disabled')
+        self.guess_entry = tk.Entry(self.game_frame)
+        self.guess_entry.pack()
+        self.guess_entry.config(state='disabled')
 
-            self.guess_button = tk.Button(root, text="Guess", command=self.make_guess)
-            self.guess_button.pack()
-            self.guess_button.config(state='disabled')
+        self.guess_button = tk.Button(self.game_frame, text="Guess", command=self.make_guess)
+        self.guess_button.pack()
+        self.guess_button.config(state='disabled')
 
-            self.result_label = tk.Label(root, text="")
-            self.result_label.pack()
+        self.result_label = tk.Label(self.game_frame, text="")
+        self.result_label.pack()
 
-            self.name_entry.bind("<Return>", lambda event: self.start_game())
-            self.guess_entry.bind("<Return>", lambda event: self.make_guess())
+        self.name_entry.bind("<Return>", lambda event: self.start_game())
+        self.guess_entry.bind("<Return>", lambda event: self.make_guess())
 
+    def show_game(self):
+        self.main_menu_frame.pack_forget()
+        self.game_frame.pack()
+
+    def back_main_menu(self):
+        self.game_frame.pack_forget()
+        self.main_menu_frame.pack()
+
+        
     def start_game(self):
         self.player_name = self.name_entry.get().strip()
         if not self.player_name:
@@ -142,7 +151,8 @@ class Game():
                     msg += "\nNew High Score!"
 
                 messagebox.showinfo("Game Over", msg)
-                self.reset_game()    
+                self.reset_game()
+                self.back_main_menu()    
                 
     def reset_game(self):
             self.info_label.config(text="Game finished. Start again if you want.")
