@@ -122,6 +122,7 @@ class Game():
         self.guess_entry.config(state='normal')
         self.guess_button.config(state='normal')
         self.result_label.config(text="")
+        self.guess_entry.focus_set()
         #self.guess_entry.bind("<Return>", lambda event: self.make_guess())
         
 
