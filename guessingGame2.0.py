@@ -71,7 +71,8 @@ class Game():
 
     def create_mane_menu(self):
         tk.Label(self.main_menu_frame, text="Welcome!").pack(pady=20)
-        tk.Button(self.main_menu_frame, text="Play", command=self.show_game).pack()
+        tk.Button(self.main_menu_frame, text="Play", command=self.show_game).pack(pady=(0, 20))
+        tk.Button(self.main_menu_frame, text="History", command=self.show_history).pack()
 
         
     def create_game_scr(self):
@@ -104,6 +105,10 @@ class Game():
     def show_game(self):
         self.main_menu_frame.pack_forget()
         self.game_frame.pack()
+
+    def show_history(self):
+        self.main_menu_frame.pack_forget()
+        self.game_frame.pack() #change here
 
     def back_main_menu(self):
         self.game_frame.pack_forget()
