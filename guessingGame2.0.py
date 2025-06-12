@@ -26,9 +26,18 @@ def add_record(name, time, score):
     with open('archive.json', 'w') as file:
         json.dump(archive, file, indent=4)
 
-def archive_print():
+def archive_print(width=60):
     #print(open_archive())
-    return json.dumps(open_archive(), indent=4)
+    records = open_archive()
+    output = ""
+    separator = "="*width + "\n"
+    for rec in records:
+        output += f"Name: {rec['name']}\n"
+        output += f"Score: {rec['score']}\n"
+        output += f"Time: {rec['time']}sec\n"
+        output += separator
+    return output
+    #return json.dumps(open_archive(), indent=4)
 
 
 def read_high_score():
@@ -82,7 +91,7 @@ class Game():
         self.name_Label = tk.Label(self.history_frame, text="History")
         self.name_Label.pack()
 
-        self.score_text = scrolledtext.ScrolledText(self.history_frame,width=60, height=20, state='disabled')
+        self.score_text = scrolledtext.ScrolledText(self.history_frame,width=50, height=20, state='disabled')
         self.score_text.pack()
 
         self.exit_Button = tk.Button(self.history_frame, text="Back", command=self.back_to_menu).pack()
@@ -126,7 +135,7 @@ class Game():
         self.main_menu_frame.pack_forget()
         self.score_text.config(state="normal")
         self.score_text.delete('1.0', tk.END)
-        self.score_text.insert(tk.END, archive_print())
+        self.score_text.insert(tk.END, archive_print(50))
         self.history_frame.pack() #change here
         self.score_text.config(state="disabled")
 
