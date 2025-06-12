@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import scrolledtext
 import random
 import time
 import json
@@ -26,7 +27,8 @@ def add_record(name, time, score):
         json.dump(archive, file, indent=4)
 
 def archive_print():
-    print(open_archive())
+    #print(open_archive())
+    return json.dumps(open_archive(), indent=4)
 
 
 def read_high_score():
@@ -52,7 +54,7 @@ class Game():
     def __init__(self, root):
         self.root = root
         self.root.title("Game")
-        center_wind(root,400,300)
+        center_wind(root,500,400)
         #root.configure(bg="red")
 
         self.randon_int = None
@@ -63,9 +65,11 @@ class Game():
         # Frames
         self.main_menu_frame = tk.Frame(root)
         self.game_frame = tk.Frame(root)
+        self.history_frame = tk.Frame(root)
 
         self.create_mane_menu()
         self.create_game_scr()
+        self.create_history_scr()
 
         self.main_menu_frame.pack()
 
@@ -74,6 +78,18 @@ class Game():
         tk.Button(self.main_menu_frame, text="Play", command=self.show_game).pack(pady=(0, 20))
         tk.Button(self.main_menu_frame, text="History", command=self.show_history).pack()
 
+    def create_history_scr(self):
+        self.name_Label = tk.Label(self.history_frame, text="History")
+        self.name_Label.pack()
+
+        self.score_text = scrolledtext.ScrolledText(self.history_frame,width=60, height=20, state='disabled')
+        self.score_text.pack()
+
+        self.exit_Button = tk.Button(self.history_frame, text="Back", command=self.back_to_menu).pack()
+        
+    def back_to_menu(self):
+        self.history_frame.pack_forget()
+        self.main_menu_frame.pack()
         
     def create_game_scr(self):
         self.name_Label = tk.Label(self.game_frame, text="Enter your name:")
@@ -108,7 +124,11 @@ class Game():
 
     def show_history(self):
         self.main_menu_frame.pack_forget()
-        self.game_frame.pack() #change here
+        self.score_text.config(state="normal")
+        self.score_text.delete('1.0', tk.END)
+        self.score_text.insert(tk.END, archive_print())
+        self.history_frame.pack() #change here
+        self.score_text.config(state="disabled")
 
     def back_main_menu(self):
         self.game_frame.pack_forget()
