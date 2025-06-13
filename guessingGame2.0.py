@@ -75,17 +75,20 @@ class Game():
         self.main_menu_frame = tk.Frame(root)
         self.game_frame = tk.Frame(root)
         self.history_frame = tk.Frame(root)
+        self.tic_frame = tk.Frame(root)
 
         self.create_mane_menu()
         self.create_game_scr()
         self.create_history_scr()
+        self.create_tic_scr()
 
         self.main_menu_frame.pack()
 
     def create_mane_menu(self):
         tk.Label(self.main_menu_frame, text="Welcome!").pack(pady=20)
-        tk.Button(self.main_menu_frame, text="Play", command=self.show_game).pack(pady=(0, 20))
-        tk.Button(self.main_menu_frame, text="History", command=self.show_history).pack()
+        tk.Button(self.main_menu_frame, text="Play numbers", command=self.show_game).pack(pady=(0, 20))
+        tk.Button(self.main_menu_frame, text="History", command=self.show_history).pack(pady=(0, 20))
+        tk.Button(self.main_menu_frame, text="Play tic-tac-toe", command=self.show_history).pack()
 
     def create_history_scr(self):
         self.name_Label = tk.Label(self.history_frame, text="History")
@@ -124,8 +127,17 @@ class Game():
         self.result_label = tk.Label(self.game_frame, text="")
         self.result_label.pack()
 
+        self.back_button = tk.Button(self.game_frame, text="Back", command=self.back_main_menu)
+        self.back_button.pack()
+
         self.name_entry.bind("<Return>", lambda event: self.start_game())
         self.guess_entry.bind("<Return>", lambda event: self.make_guess())
+
+    def create_tic_scr(self):
+        self.info_label = tk.Label(self.tic_frame, text="")
+        self.info_label.pack()
+
+        self.back_button = tk.Button(self.tic_frame, text="Back", command=self.back_main_menu)
 
     def show_game(self):
         self.main_menu_frame.pack_forget()
@@ -139,8 +151,11 @@ class Game():
         self.history_frame.pack() #change here
         self.score_text.config(state="disabled")
 
-    def back_main_menu(self):
-        self.game_frame.pack_forget()
+    #def show_tic():
+        #self.back_button 
+
+    def back_main_menu(frame, self):
+        frame.pack_forget()
         self.main_menu_frame.pack()
 
         
@@ -187,7 +202,7 @@ class Game():
 
                 messagebox.showinfo("Game Over", msg)
                 self.reset_game()
-                self.back_main_menu()    
+                self.back_main_menu(self.game_frame)    
                 
     def reset_game(self):
             self.info_label.config(text="Game finished. Start again if you want.")
