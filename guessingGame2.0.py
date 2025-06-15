@@ -127,7 +127,7 @@ class Game():
         self.result_label = tk.Label(self.game_frame, text="")
         self.result_label.pack()
 
-        self.back_button = tk.Button(self.game_frame, text="Back", command=self.back_main_menu)
+        self.back_button = tk.Button(self.game_frame, text="Back", command=lambda: self.back_main_menu(self.game_frame))
         self.back_button.pack()
 
         self.name_entry.bind("<Return>", lambda event: self.start_game())
@@ -137,7 +137,7 @@ class Game():
         self.info_label = tk.Label(self.tic_frame, text="")
         self.info_label.pack()
 
-        self.back_button = tk.Button(self.tic_frame, text="Back", command=self.back_main_menu)
+        self.back_button = tk.Button(self.tic_frame, text="Back", command=lambda: self.back_main_menu(self.game_frame))
 
     def show_game(self):
         self.main_menu_frame.pack_forget()
@@ -154,7 +154,7 @@ class Game():
     #def show_tic():
         #self.back_button 
 
-    def back_main_menu(frame, self):
+    def back_main_menu(self, frame):
         frame.pack_forget()
         self.main_menu_frame.pack()
 
