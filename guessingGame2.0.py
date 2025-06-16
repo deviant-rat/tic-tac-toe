@@ -97,7 +97,7 @@ class Game():
         self.score_text = scrolledtext.ScrolledText(self.history_frame,width=50, height=20, state='disabled')
         self.score_text.pack()
 
-        self.exit_Button = tk.Button(self.history_frame, text="Back", command=self.back_to_menu).pack()
+        self.exit_Button = tk.Button(self.history_frame, text="Back", command=lambda: self.back_main_menu(self.history_frame)).pack()
         
     def back_to_menu(self):
         self.history_frame.pack_forget()
