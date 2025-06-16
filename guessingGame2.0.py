@@ -27,7 +27,6 @@ def add_record(name, time, score):
         json.dump(archive, file, indent=4)
 
 def archive_print(width=60):
-    #print(open_archive())
     records = open_archive()
     output = ""
     separator = "="*width + "\n"
@@ -37,7 +36,6 @@ def archive_print(width=60):
         output += f"Time: {rec['time']}sec\n"
         output += separator
     return output
-    #return json.dumps(open_archive(), indent=4)
 
 
 def read_high_score():
@@ -88,7 +86,7 @@ class Game():
         tk.Label(self.main_menu_frame, text="Welcome!").pack(pady=20)
         tk.Button(self.main_menu_frame, text="Play numbers", command=self.show_game).pack(pady=(0, 20))
         tk.Button(self.main_menu_frame, text="History", command=self.show_history).pack(pady=(0, 20))
-        tk.Button(self.main_menu_frame, text="Play tic-tac-toe", command=self.show_history).pack()
+        tk.Button(self.main_menu_frame, text="Play tic-tac-toe", command=self.show_tic_game).pack()
 
     def create_history_scr(self):
         self.name_Label = tk.Label(self.history_frame, text="History")
@@ -134,7 +132,18 @@ class Game():
         self.info_label = tk.Label(self.tic_frame, text="")
         self.info_label.pack()
 
-        self.back_button = tk.Button(self.tic_frame, text="Back", command=lambda: self.back_main_menu(self.game_frame))
+        self.canvas = tk.Canvas(self.tic_frame, width=300,height=300)
+        self.canvas.pack()
+
+        self.canvas.create_line(100, 0, 100, 300, width=2)
+        self.canvas.create_line(200, 0, 200, 300, width=2)
+        self.canvas.create_line(0, 100, 300, 100, width=2)
+        self.canvas.create_line(0, 200, 300, 200, width=2)
+
+        self.canvas.bind("<Button-1>", self.handle_click)
+
+        self.back_button = tk.Button(self.tic_frame, text="Back", command=lambda: self.back_main_menu(self.tic_frame))
+        self.back_button.pack()
 
     def show_game(self):
         self.main_menu_frame.pack_forget()
@@ -148,14 +157,23 @@ class Game():
         self.history_frame.pack() #change here
         self.score_text.config(state="disabled")
 
-    #def show_tic():
-        #self.back_button 
+    def show_tic_game(self):
+        self.main_menu_frame.pack_forget()
+        self.tic_frame.pack()
+
 
     def back_main_menu(self, frame):
         frame.pack_forget()
         self.main_menu_frame.pack()
 
+    #def start_tic_game():
         
+
+    def handle_click(self, event):
+            x = event.x // 100 * 100 + 50
+            y = event.y // 100 * 100 + 50
+            self.canvas.create_text(x, y, text="X", font=("Arial", 48))
+    
     def start_game(self):
         self.player_name = self.name_entry.get().strip()
         if not self.player_name:
