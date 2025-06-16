@@ -99,9 +99,6 @@ class Game():
 
         self.exit_Button = tk.Button(self.history_frame, text="Back", command=lambda: self.back_main_menu(self.history_frame)).pack()
         
-    def back_to_menu(self):
-        self.history_frame.pack_forget()
-        self.main_menu_frame.pack()
         
     def create_game_scr(self):
         self.name_Label = tk.Label(self.game_frame, text="Enter your name:")
