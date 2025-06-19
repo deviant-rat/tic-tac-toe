@@ -68,6 +68,7 @@ class Game():
         self.count = 0
         self.start_time = None
         self.player_name = None
+        self.player_turn = 0
 
         # Frames
         self.main_menu_frame = tk.Frame(root)
@@ -166,13 +167,22 @@ class Game():
         frame.pack_forget()
         self.main_menu_frame.pack()
 
-    #def start_tic_game():
-        
+       
 
     def handle_click(self, event):
-            x = event.x // 100 * 100 + 50
-            y = event.y // 100 * 100 + 50
-            self.canvas.create_text(x, y, text="X", font=("Arial", 48))
+            if self.player_turn == 0:
+                x = event.x // 100 * 100 + 50
+                y = event.y // 100 * 100 + 50
+                self.canvas.create_text(x, y, text="X", font=("Arial", 48))
+                self.player_turn = 1
+            else:
+                radius = 20
+                x = event.x // 100 * 100 + 50
+                y = event.y // 100 * 100 + 50
+                self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, width=6)
+                self.player_turn = 0
+
+
     
     def start_game(self):
         self.player_name = self.name_entry.get().strip()
