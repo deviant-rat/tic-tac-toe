@@ -69,7 +69,7 @@ class Game():
         self.start_time = None
         self.player_name = None
         self.player_turn = 0
-        self.player_board = [["" for _ in range(3) for _ in range(3)]]
+        self.player_board = [["" for _ in range(3)] for _ in range(3)]
 
         # Frames
         self.main_menu_frame = tk.Frame(root)
