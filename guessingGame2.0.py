@@ -69,6 +69,7 @@ class Game():
         self.start_time = None
         self.player_name = None
         self.player_turn = 0
+        self.player_board = [["" for _ in range(3) for _ in range(3)]]
 
         # Frames
         self.main_menu_frame = tk.Frame(root)
@@ -170,16 +171,23 @@ class Game():
        
 
     def handle_click(self, event):
+            row = event.y // 100 
+            col = event.x // 100 
+
+            if self.player_board[row][col] != "":
+                return
+            
+            y = row * 100 + 50
+            x = col * 100 + 50
+            
             if self.player_turn == 0:
-                x = event.x // 100 * 100 + 50
-                y = event.y // 100 * 100 + 50
                 self.canvas.create_text(x, y, text="X", font=("Arial", 48))
+                self.player_board[row][col] = 1
                 self.player_turn = 1
             else:
                 radius = 20
-                x = event.x // 100 * 100 + 50
-                y = event.y // 100 * 100 + 50
                 self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, width=6)
+                self.player_board[row][col] = 0
                 self.player_turn = 0
 
 
