@@ -189,6 +189,23 @@ class Game():
                 self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, width=6)
                 self.player_board[row][col] = 0
                 self.player_turn = 0
+            if self.cheak_tic_winner(row,col):
+                messagebox.showinfo("Game over", f"Player {self.player_board[row][col]} wins!")
+
+
+    def cheak_tic_winner(self,row,col):
+        table = self.player_board
+        player = table[row][col]
+
+        if all(cell == player for cell in table[row]):
+            return True
+        if all(table[r][col] == player for r in range(3)):
+            return True
+        if row==col and all(table[i][i] == player for i in range(3)):
+            return True
+        if row+col==2 and all(table[i][2-i] == player for i in range(3)):
+            return True
+        return False
 
 
     
