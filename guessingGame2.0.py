@@ -134,6 +134,9 @@ class Game():
         self.info_label = tk.Label(self.tic_frame, text="")
         self.info_label.pack()
 
+        self.info_turn = tk.Label(self.tic_frame, text="X turn")
+        self.info_turn.pack()
+
         self.canvas = tk.Canvas(self.tic_frame, width=300,height=300)
         self.canvas.pack()
 
@@ -184,11 +187,13 @@ class Game():
                 self.canvas.create_text(x, y, text="X", font=("Arial", 48))
                 self.player_board[row][col] = 1
                 self.player_turn = 1
+                self.info_turn.config(text="O turn")
             else:
                 radius = 20
                 self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, width=6)
                 self.player_board[row][col] = 0
                 self.player_turn = 0
+                self.info_turn.config(text="X turn")
             if self.cheak_tic_winner(row,col):
                 messagebox.showinfo("Game over", f"Player {self.player_board[row][col]} wins!")
 
