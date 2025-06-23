@@ -140,10 +140,7 @@ class Game():
         self.canvas = tk.Canvas(self.tic_frame, width=300,height=300)
         self.canvas.pack()
 
-        self.canvas.create_line(100, 0, 100, 300, width=2)
-        self.canvas.create_line(200, 0, 200, 300, width=2)
-        self.canvas.create_line(0, 100, 300, 100, width=2)
-        self.canvas.create_line(0, 200, 300, 200, width=2)
+        self.draw_table()
 
         self.canvas.bind("<Button-1>", self.handle_click)
 
@@ -196,6 +193,9 @@ class Game():
                 self.info_turn.config(text="X turn")
             if self.cheak_tic_winner(row,col):
                 messagebox.showinfo("Game over", f"Player {self.player_board[row][col]} wins!")
+                self.reset_tic()
+                self.back_main_menu(self.game_frame)    
+
 
 
     def cheak_tic_winner(self,row,col):
@@ -211,6 +211,24 @@ class Game():
         if row+col==2 and all(table[i][2-i] == player for i in range(3)):
             return True
         return False
+    
+    def reset_tic(self):
+        for i in range(3):
+            for u in range(3):
+                self.player_board[i][u] = ""
+        self.canvas.delete("all")
+        self.info_turn.config(text="X turn")
+        self.draw_table()
+        self.player_turn = 0
+
+
+    def draw_table(self):
+        self.canvas.create_line(100, 0, 100, 300, width=2)
+        self.canvas.create_line(200, 0, 200, 300, width=2)
+        self.canvas.create_line(0, 100, 300, 100, width=2)
+        self.canvas.create_line(0, 200, 300, 200, width=2)
+
+
 
 
     
